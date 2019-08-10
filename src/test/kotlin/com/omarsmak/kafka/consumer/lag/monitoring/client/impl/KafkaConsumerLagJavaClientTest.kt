@@ -33,10 +33,10 @@ internal class KafkaConsumerLagJavaClientTest {
     private lateinit var kafkaConsumerClient: KafkaConsumer<String, String>
 
     @BeforeAll
-    @Suppress("UNCHECKED_CAST")
     fun initialize() {
         // Mocking classes
         adminClient = mockkClass(AdminClient::class)
+        @Suppress("UNCHECKED_CAST")
         kafkaConsumerClient = mockkClass(KafkaConsumer::class) as KafkaConsumer<String, String>
 
         mockClasses()
