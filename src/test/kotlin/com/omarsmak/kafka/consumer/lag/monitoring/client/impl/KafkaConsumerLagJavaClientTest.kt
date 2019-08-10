@@ -1,13 +1,10 @@
 package com.omarsmak.kafka.consumer.lag.monitoring.client.impl
 
 import com.omarsmak.kafka.consumer.lag.monitoring.client.KafkaConsumerLagClient
-import com.omarsmak.kafka.consumer.lag.monitoring.client.KafkaConsumerLagClientFactory
 import com.omarsmak.kafka.consumer.lag.monitoring.client.exceptions.KafkaConsumerLagClientException
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkClass
 import org.apache.kafka.clients.admin.AdminClient
-import org.apache.kafka.clients.admin.AdminClientConfig
 import org.apache.kafka.clients.admin.ConsumerGroupListing
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.consumer.OffsetAndMetadata
@@ -16,10 +13,8 @@ import org.apache.kafka.common.PartitionInfo
 import org.apache.kafka.common.TopicPartition
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import java.util.*
 import kotlin.random.Random
 import kotlin.test.assertFailsWith
 
