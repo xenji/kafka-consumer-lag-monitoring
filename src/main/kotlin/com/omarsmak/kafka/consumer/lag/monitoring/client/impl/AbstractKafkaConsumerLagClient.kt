@@ -35,12 +35,10 @@ internal abstract class AbstractKafkaConsumerLagClient(
         return Offsets(topicName, topicOffsetsMap)
     }
 
-    override fun getConsumerLag(consumerGroup: String): List<Lag> {
-        val consumerOffsets = getConsumerOffsets(consumerGroup)
-        return consumerOffsets.map {
+    override fun getConsumerLag(consumerGroup: String) =
+        getConsumerOffsets(consumerGroup).map {
             getConsumerLagPerTopic(it)
         }
-    }
 
     override fun close() {
         kafkaConsumerClient.wakeup()
