@@ -49,10 +49,7 @@ internal abstract class AbstractKafkaConsumerLagClient(
 
     private fun getConsumerLagPerTopic(consumerOffsets: Offsets): Lag {
         val topicOffsets = getTopicOffsets(consumerOffsets.topicName)
-
-        val lagPerPartitionAndTotalLag = calculateLagPerPartitionAndTotalLag(topicOffsets, consumerOffsets)
-        val lagPerPartition = lagPerPartitionAndTotalLag.first
-        val totalLag = lagPerPartitionAndTotalLag.second
+        val (lagPerPartition, totalLag) = calculateLagPerPartitionAndTotalLag(topicOffsets, consumerOffsets)
 
         return Lag(
                 topicOffsets.topicName,
@@ -64,13 +61,10 @@ internal abstract class AbstractKafkaConsumerLagClient(
     }
 
     private fun calculateLagPerPartitionAndTotalLag(topicOffsets: Offsets, consumerOffsets: Offsets): Pair<Map<Int, Long>, Long>{
-        var totalLag = 0L
         val lagPerPartition = consumerOffsets.offsetPerPartition.map { (k, v) ->
-            val lag = topicOffsets.offsetPerPartition.getValue(k) - v
-            totalLag += lag
-            k to lag
+            k to topicOffsets.offsetPerPartition.getValue(k) - v
         }.toMap()
 
-        return (lagPerPartition to totalLag)
+        return (lagPerPartition to lagPerPartition.values.sum())
     }
 }
