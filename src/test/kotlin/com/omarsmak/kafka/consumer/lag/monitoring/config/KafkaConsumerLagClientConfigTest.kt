@@ -99,7 +99,7 @@ internal class KafkaConsumerLagClientConfigTest {
 
         assertNotNull(configMap)
         assertTrue {
-            !configMap.isEmpty()
+            configMap.isNotEmpty()
         }
         assertEquals(100, configMap[KafkaConsumerLagClientConfig.POLL_INTERVAL])
         assertEquals("kafka1:9092,kafka2:9092", configMap[KafkaConsumerLagClientConfig.BOOTSTRAP_SERVERS])
