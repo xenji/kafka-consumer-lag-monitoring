@@ -13,6 +13,8 @@ import org.apache.kafka.common.serialization.Serdes
  * @author oalsafi
  */
 object KafkaConsumerLagClientFactory {
+    private val stringSerde = Serdes.String()
+
     @JvmStatic
     fun create(prop: Properties): KafkaConsumerLagClient = createJavaClient(prop)
 
@@ -26,7 +28,7 @@ object KafkaConsumerLagClientFactory {
 
     private fun createJavaClient(prop: Properties): KafkaConsumerLagJavaClient {
         val adminClient = AdminClient.create(prop)
-        val consumerClient = KafkaConsumer(prop, Serdes.String().deserializer(), Serdes.String().deserializer())
+        val consumerClient = KafkaConsumer(prop, stringSerde.deserializer(), stringSerde.deserializer())
 
         return KafkaConsumerLagJavaClient(adminClient, consumerClient)
     }
